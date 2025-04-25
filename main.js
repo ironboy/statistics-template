@@ -1,44 +1,38 @@
-import * as s from './libs/simple-statistics.js';
-import jload from './libs/jload.js';
+import makeChartFriendly from './libs/makeChartFriendly.js'; './libs/makeChartFriendly.js';
+import csvLoad from './libs/csvLoad.js';
+import tableFromData from './libs/tableFromData.js';
 import drawGoogleChart from './libs/drawGoogleChart.js';
 import addToPage from './libs/addToPage.js';
+import './libs/liveReload.js';
 
-// Usage of data
-let data = await jload('test-data.json');
-s.shuffleInPlace(data);
+let data = await csvLoad('smhi-rainfall-temperature-sthm.csv', ';');
 
-addToPage(`<pre>
+// Filter: Data from the year 2024
+let data2024 = data.filter(x => x.date >= '2024-01' && x.date <= '2024-12');
 
-  Data: ${data}
+// Display a headline
+addToPage('<h2>Nederbörd och temperaturer i Stockholm,<br>månad för månad 2024</h2>');
 
-  Min (minsta värde): ${s.min(data)}
-  Max (största värde): ${s.max(data)}
-  Variationsbredd: ${s.max(data) - s.min(data)}
-  Summa: ${s.sum(data)}
+// Display a table with the data from the data2024 variable
+tableFromData({ data: data2024, columnNames: ['Datum', 'Nederbörd (mm)', 'Temperatur (°C)'] });
 
-  Medelvärde: ${s.mean(data).toFixed(2)}
-  Median: ${s.median(data)}
-  Typvärde: ${s.mode(data)}
+// Map: Keep date and temperatureC properties/columns (and not the rainFall column)
+let temperatures2024 = data2024.map(({ date, temperatureC }) => ({ date, temperatureC }));
 
-  Första kvartil: ${s.quantile(data, 0.25)}
-  Andra kvartil: ${s.quantile(data, 0.5)} (samma som median)
-  Tredje kvartil:  ${s.quantile(data, 0.75)}
-
-  Varians: ${s.variance(data).toFixed(2)}
-  Standardavvikelse: ${s.standardDeviation(data).toFixed(2)}
-
-</pre>`);
-
-
-// Draw a Google Charts
+// Draw a line chart of temperatures2024
 drawGoogleChart({
-  type: 'PieChart',
-  data: 'pie-chart-data.json',
+  type: 'LineChart',
+  data: makeChartFriendly(temperatures2024, 'Månad', 'Temperatur (°C)'),
   options: {
-    title: 'My Daily Activities',
-    height: 500
+    title: 'Medeltemperaturer i Stockholm 2024, månad för månad',
+    height: 500,
+    curveType: 'function',
+    chartArea: { left: 80 },
+    hAxis: {
+      slantedText: true,
+      slantedAngle: 45
+    }
   }
 });
 
-
-
+// Can you make a chart that shows rainfall during 2024 here?
