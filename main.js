@@ -7,7 +7,7 @@ import './libs/liveReload.js';
 
 let data = await csvLoad('smhi-rainfall-temperature-sthm.csv', ';');
 
-// Filter: Data from the year 2024
+// Filter: Data from the year 2024x
 let data2024 = data.filter(x => x.date >= '2024-01' && x.date <= '2024-12');
 
 // Display a headline
