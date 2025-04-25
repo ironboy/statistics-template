@@ -3,7 +3,7 @@ import jload from './libs/jload.js';
 import drawGoogleChart from './libs/drawGoogleChart.js';
 import addToPage from './libs/addToPage.js';
 
-// Usage 
+// Usage of data
 let data = await jload('test-data.json');
 s.shuffleInPlace(data);
 
