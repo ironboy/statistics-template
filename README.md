@@ -1,5 +1,5 @@
 # Statistics Template JS
-© ironboy/NodeHill 2025
+© ironboy/NodeHill 2026
 
 ## Om STJS
 Det här mallen **STJS (Statistics Template for JavaScript)** underlättar att arbeta med statistik i JavaScript, samt att kunna visa upp den på ett interaktivt sätt. Den ger bl.a. stöd för:
@@ -562,7 +562,7 @@ let pValue = result.p;
 ```
 
 ## MIT License
-Copyright © 2025 ironboy/NodeHill
+Copyright © 2026 ironboy/NodeHill
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
